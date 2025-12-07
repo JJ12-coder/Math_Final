@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Regression as Minimization (Intercept-only)</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js for graphing -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Linear Regression as Minimization (Intercept-only)</h1>
+            <p>Explore how gradient descent minimizes MSE to find the optimal intercept b</p>
+        </header>
+
+        <!-- Main Interactive Section -->
+        <section class="main-section">
+            <div class="control-panel">
+                <div class="slider-control">
+                    <label for="intercept-slider">Intercept (b):</label>
+                    <input type="range" id="intercept-slider" min="-10" max="10" step="0.1" value="3">
+                    <span id="intercept-value">3.0</span>
+                </div>
+                <div class="info-display">
+                    <p>MSE(b) = <span id="mse-display">0.00</span></p>
+                </div>
+            </div>
+
+            <div class="graphs-container">
+                <!-- Left graph: Data and line y=b -->
+                <div class="graph-and-table-wrapper">
+                    <div class="graph-wrapper">
+                        <h3>Dataset with Model Line</h3>
+                        <canvas id="dataChart"></canvas>
+                    </div>
+                    
+                    <!-- Residual error table -->
+                    <div class="residual-table-wrapper">
+                        <h4>Residual Analysis</h4>
+                        <table class="residual-table">
+                            <thead>
+                                <tr>
+                                    <th>xᵢ</th>
+                                    <th>yᵢ</th>
+                                    <th>b</th>
+                                    <th>Residual (yᵢ - b)</th>
+                                    <th>Squared Error (yᵢ - b)²</th>
+                                </tr>
+                            </thead>
+                            <tbody id="residual-tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Right graph: MSE curve with current point -->
+                <div class="graph-wrapper">
+                    <h3>MSE(b) Curve</h3>
+                    <canvas id="mseChart"></canvas>
+                    <div id="mse-formula-box" class="formula-box">
+                        <!-- Live MSE formula will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gradient Descent Simulation Section -->
+        <section class="gd-section">
+            <h2>Gradient Descent Simulation</h2>
+            <div class="gd-controls">
+                <div class="control-group">
+                    <label for="learning-rate">Learning Rate:</label>
+                    <input type="number" id="learning-rate" value="0.1" min="0.001" max="1" step="0.01">
+                </div>
+                <div class="control-group">
+                    <label for="iterations">Iterations:</label>
+                    <input type="number" id="iterations" value="10" min="1" max="100" step="1">
+                </div>
+                <button id="randomize-btn" class="btn btn-secondary">Randomize Starting b</button>
+            </div>
+
+            <div class="gd-buttons">
+                <button id="run-gd-btn" class="btn btn-primary">Run Gradient Descent</button>
+                <button id="step-once-btn" class="btn btn-secondary">Step Once</button>
+            </div>
+
+            <!-- Iterations table -->
+            <div class="iterations-table-wrapper">
+                <h3>Iteration History</h3>
+                <table class="iterations-table">
+                    <thead>
+                        <tr>
+                            <th>Iteration</th>
+                            <th>b</th>
+                            <th>MSE(b)</th>
+                            <th>Gradient</th>
+                        </tr>
+                    </thead>
+                    <tbody id="iterations-body">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section class="practice-section">
+            <h2>Practice: Find the Optimal b</h2>
+            <div class="practice-controls">
+                <label for="practice-difficulty" class="difficulty-label">Difficulty:</label>
+                <select id="practice-difficulty" class="difficulty-select">
+                    <option value="easy">Easy (2 points)</option>
+                    <option value="medium" selected>Medium (3–4 points)</option>
+                    <option value="hard">Hard (5–8 points + outlier)</option>
+                </select>
+                <button id="new-practice-btn" class="btn btn-secondary">New Practice Dataset</button>
+                <button id="reveal-solution-btn" class="btn btn-secondary">Reveal Solution</button>
+            </div>
+
+            <div class="practice-display">
+                <div class="control-panel">
+                    <div class="slider-control">
+                        <label for="practice-slider">Intercept (b):</label>
+                        <input type="range" id="practice-slider" min="-10" max="10" step="0.1" value="3">
+                        <span id="practice-intercept-value">3.0</span>
+                    </div>
+                    <div class="info-display">
+                        <p>MSE(b) = <span id="practice-mse-display">0.00</span></p>
+                        <p id="practice-optimal-display" style="display:none;">Optimal b* = <span id="practice-optimal-value">0.00</span></p>
+                    </div>
+                </div>
+
+                <div class="graph-wrapper practice-graph">
+                    <h3>Practice Dataset</h3>
+                    <canvas id="practiceChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Concept Check Section -->
+        <section class="concept-section">
+            <h2>Concept Check: Check Your Understanding</h2>
+            <div id="concept-questions" class="questions-container">
+                <!-- Questions will be rendered dynamically -->
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Built to help understand linear regression, MSE minimization, and gradient descent | Intercept-only model</p>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
